@@ -54,7 +54,7 @@ workclass  <- seq(1, 8)
 names(workclass)  <- c(" Private" , " Self-emp-not-inc" , " Self-emp-inc" , " Federal-gov" , " Local-gov" , " State-gov" , " Without-pay" , " Never-worked" )  # nolint
 
 education  <- seq(1, 16)
-names(education)  <- c(" Bachelors" , " Some-college" , " 11th" , " HS-grad" , " Prof-school" , " Assoc-acdm" , " Assoc-voc" , " 9th" , " 7th-8th" , " 12th" , " Masters" , " 1st-4th" , " 10th" , " Doctorate" , " 5th-6th" , " Preschool" ) # nolint
+names(education)  <- c(" Preschool", " 1st-4th", " 5th-6th",  " 7th-8th", " 9th" ,  " 10th", " 11th"," 12th", " HS-grad", " Prof-school", " Bachelors", " Assoc-voc", " Assoc-acdm", " Some-college", " Masters", " Doctorate") #nolint
 
 marital_status  <- seq(1, 7)
 names(marital_status) <- c(" Married-civ-spouse" , " Divorced" , " Never-married" , " Separated" , " Widowed" , " Married-spouse-absent" , " Married-AF-spouse" ) # nolint
