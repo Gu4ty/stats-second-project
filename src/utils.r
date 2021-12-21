@@ -75,70 +75,65 @@ native_country <- seq(1, 41)
 names(native_country) <- c(" United-States", " Cambodia", " England", " Puerto-Rico", " Canada", " Germany", " Outlying-US(Guam-USVI-etc)", " India", " Japan", " Greece", " South", " China", " Cuba", " Iran", " Honduras", " Philippines", " Italy", " Poland", " Jamaica", " Vietnam", " Mexico", " Portugal", " Ireland", " France", " Dominican-Republic", " Laos", " Ecuador", " Taiwan", " Haiti", " Columbia", " Hungary", " Guatemala", " Nicaragua", " Scotland", " Thailand", " Yugoslavia", " El-Salvador", " Trinadad&Tobago", " Peru", " Hong", " Holand-Netherlands") # nolint
 
 income <- seq(1, 2)
-names(income) <- c(" >50K", " <=50K")
+names(income) <- c(" <=50K", " >50K")
 
-process_raw_data <- function(data) {
-    print("Processing workclass ...")
-    workclass_mean <-
-        round(mean(categorical_to_numerical(data$workclass, workclass)))
+# TODO Refactor code for preprocessing data
+numerical_data <- function(data){
+
+    print("Processing  workclass ...")
     data$workclass <-
-        replace_missing_data(data$workclass, workclass, workclass_mean)
-
-    # Not necessary, identical to Education Num
-    # print("Processing education ...")
-    # education_mean <-
-        # round(mean(categorical_to_numerical(data$education, education)))
-    # data$education <-
-        # replace_missing_data(data$education, education, education_mean)
+        categorical_to_numerical(
+			data$workclass,
+			workclass
+		)
 
     print("Processing marital status ...")
-    marital_status_mean <-
-        round(mean(categorical_to_numerical(data$marital.status, marital_status)))#nolint
     data$marital_status <-
-        replace_missing_data(
+        categorical_to_numerical(
             data$marital.status,
-            marital_status,
-            marital_status_mean
+            marital_status
         )
     print("Processing occupation ...")
-    occupation_mean <-
-        round(mean(categorical_to_numerical(data$occupation, occupation)))
     data$occupation <-
-        replace_missing_data(data$occupation, occupation, occupation_mean)
+        categorical_to_numerical(
+            data$occupation,
+            occupation
+       )
 
     print("Processing relationship ...")
-    relationship_mean <-
-        round(mean(categorical_to_numerical(data$relationship, relationship)))
     data$relationship <-
-        replace_missing_data(data$relationship, relationship, relationship_mean)
+        categorical_to_numerical(
+            data$relationship,
+			relationship
+		)
 
     print("Processing race ...")
-    race_mean <-
-        round(mean(categorical_to_numerical(data$race, race)))
     data$race <-
-        replace_missing_data(data$race, race, race_mean)
+        categorical_to_numerical(
+			data$race,
+			race
+		)
 
     print("Processing sex ...")
-    sex_mean <-
-        round(mean(categorical_to_numerical(data$sex, sex)))
     data$sex <-
-        replace_missing_data(data$sex, sex, sex_mean)
+        categorical_to_numerical(
+			data$sex,
+		    sex
+		)
 
     print("Processing native country ...")
-    native_country_mean <-
-        round(mean(categorical_to_numerical(data$native.country, native_country)))#nolint
     data$native_country <-
-        replace_missing_data(
+        categorical_to_numerical(
             data$native.country,
-            native_country,
-            native_country_mean
+            native_country
         )
 
     print("Processing income ...")
-    income_mean <-
-        round(mean(categorical_to_numerical(data$income, income)))
     data$income <-
-        replace_missing_data(data$income, income, income_mean)
+        categorical_to_numerical(
+			data$income, 
+			income
+		)
 
     print("Renaming vector's names to snake case ...")
     data$education <- data$education.num
@@ -147,8 +142,118 @@ process_raw_data <- function(data) {
     data$hours_per_week <- data$hours.per.week
 
     print("Cleaning ...")
-    data <- subset(data, select = -c(native.country, marital.status, education.num, capital.gain, capital.loss, hours.per.week))#nolint
+		data <- subset(
+				   data, 
+				   select = -c(
+						   native.country, 
+						   marital.status, 
+						   education.num, 
+						   capital.gain, 
+						   capital.loss,
+						   hours.per.week
+						   )
+		)
+		print("Done!")
+		data
+}
 
-    print("Done!")
-    data
+process_raw_data <- function(data, remove=TRUE){
+	if(remove){
+	 non_missing_data <- subset( 
+			data,
+			age!=' ?'&
+			workclass!=' ?'&
+			fnlwgt!=' ?' &
+			education!=' ?' &
+			education.num!=' ?' &
+			marital.status!=' ?'&
+			occupation!=' ?'&
+			relationship!=' ?'&
+			race!=' ?'&
+			sex!=' ?'&
+			capital.gain!=' ?'&
+			capital.loss!=' ?'&
+			hours.per.week!=' ?'&
+			native.country!=' ?'&
+			income!=' ?'
+	)
+		new_data <- numerical_data(non_missing_data)
+		new_data	
+	} else {
+		print("Processing workclass ...")
+		workclass_mean <-
+			round(mean(categorical_to_numerical(data$workclass, workclass)))
+		data$workclass <-
+			replace_missing_data(data$workclass, workclass, workclass_mean)
+
+		print("Processing marital status ...")
+		marital_status_mean <-
+			round(mean(categorical_to_numerical(data$marital.status, marital_status)))#nolint
+		data$marital_status <-
+			replace_missing_data(
+				data$marital.status,
+				marital_status,
+				marital_status_mean
+			)
+		print("Processing occupation ...")
+		occupation_mean <-
+			round(mean(categorical_to_numerical(data$occupation, occupation)))
+		data$occupation <-
+			replace_missing_data(data$occupation, occupation, occupation_mean)
+
+		print("Processing relationship ...")
+		relationship_mean <-
+			round(mean(categorical_to_numerical(data$relationship, relationship)))
+		data$relationship <-
+			replace_missing_data(data$relationship, relationship, relationship_mean)
+
+		print("Processing race ...")
+		race_mean <-
+			round(mean(categorical_to_numerical(data$race, race)))
+		data$race <-
+			replace_missing_data(data$race, race, race_mean)
+
+		print("Processing sex ...")
+		sex_mean <-
+			round(mean(categorical_to_numerical(data$sex, sex)))
+		data$sex <-
+			replace_missing_data(data$sex, sex, sex_mean)
+
+		print("Processing native country ...")
+		native_country_mean <-
+			round(mean(categorical_to_numerical(data$native.country, native_country)))#nolint
+		data$native_country <-
+			replace_missing_data(
+				data$native.country,
+				native_country,
+				native_country_mean
+			)
+
+		print("Processing income ...")
+		income_mean <-
+			round(mean(categorical_to_numerical(data$income, income)))
+		data$income <-
+			replace_missing_data(data$income, income, income_mean)
+
+		print("Renaming vector's names to snake case ...")
+		data$education <- data$education.num
+		data$capital_gain <- data$capital.gain
+		data$capital_loss <- data$capital.loss
+		data$hours_per_week <- data$hours.per.week
+
+		print("Cleaning ...")
+		data <- subset(
+				   data, 
+				   select = -c(
+						   native.country, 
+						   marital.status, 
+						   education.num, 
+						   capital.gain, 
+						   capital.loss,
+						   hours.per.week
+						   )
+		)
+		print("Done!")
+		data
+	}
 }
