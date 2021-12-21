@@ -152,3 +152,10 @@ process_raw_data <- function(data) {
     print("Done!")
     data
 }
+
+standarize_data <- function(data) {
+    for (i in seq_len(length(data))) {
+       data[i] = scale(data[i], center = T, scale = T)
+    }
+    data
+}
