@@ -2,6 +2,7 @@ library(dplyr)
 library(data.table)
 
 employee <- read.csv("./raw_data/adult.data.csv")
+for (i in 1:15) employee <- employee[employee[i] != " ?", ]
 names <- c(2, 4, 6:10, 14, 15)
 employee[, names] <- lapply(employee[, names], factor)
 

@@ -8,8 +8,9 @@ library(caret)
 library(clustMixType)
 
 
-# Cargando y preprocesando los datos
+# Cargando, eliminando filas con valores NA y estandarizando
 employee <- read.csv("../raw_data/adult.data.csv")
+for (i in 1:15) employee <- employee[employee[i] != " ?", ]
 names <- c(2, 4, 6:10, 14, 15)
 employee[, names] <- lapply(employee[, names], factor)
 cols <- c(
@@ -23,24 +24,15 @@ employee[, cols] <- predict(pre_proc_val, employee[, cols])
 
 # Utilizando una semilla fija para obtener resultados deterministas
 set.seed(1)
-
-# Es necesario leer mas para llegar a esta parte.
-confidence <- c()
-for (cluster in 2:15) {
-    if (cluster %% 10 == 0) {
-        print(paste(cluster, "clusters"))
-    }
-    fit_temp <- kproto(employee, cluster)
-    confidence <- append(confidence, fit_temp$betweenss / fit_temp$totss)
-}
-plot(1:15, confidence)
-
-
-t <- data.frame(x = c(-5, 1, 2, 4, 5, 6, 7), y = c(4, 5, 7, 8, 10, 11, 14))
+# Metodo para encontrar la cantidad optima de clusters, no obstante
+# para nuestro set de datos la ram de la computadora resulta
+# insuficiente.
 a <- validation_kproto(method = "mcclain", data = employee, k = 2:5)
 
-fit <- kproto(employee, 3, verbose = T)
-fitk <- kmeans(t, 2)
+# Intuimos que tener dos clusters es buena pues muestra grupos
+# bien definidos
+employee <- subset(employee, select = c(-capital.loss))
+fit <- kproto(employee, 4, verbose = T)
 
 plot(employee, col = fit$cluster)
 clprofiles(fit, employee)
