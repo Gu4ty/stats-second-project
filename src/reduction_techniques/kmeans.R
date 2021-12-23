@@ -13,8 +13,8 @@ clprofiles <- function(object, x, col = NULL) {
     vars <- 1:ncol(x)
     clusids <- sort(unique(object$cluster))
     if (length(col) != max(clusids)) {
-          warning("Length of col should match number of clusters!")
-      }
+        warning("Length of col should match number of clusters!")
+    }
     par(ask = TRUE)
     for (i in vars) {
         if (is.numeric(x[, i])) {
@@ -51,37 +51,66 @@ cols <- c(
     "age", "fnlwgt", "education.num", "capital.gain",
     "capital.loss", "hours.per.week"
 )
-pre_proc_val <- preProcess(employee[, cols], method = c("center", "scale"))
-# Aplicando la normalizcion a al set de entrenamiento y prueba
-employee[, cols] <- predict(pre_proc_val, employee[, cols])
-
 # Eliminando capital loss y capital gain, son datos muy sesgados. Si se
-# observa su boxplot se ve que que son mayoritariamente puntos aberrantes
-# Pues la mayoria de los datos se concentran  en 0
+# observa su boxplot se ve que que son muchos datos conentrados en 0 y
+# puntos aberrantes.
 boxplot(employee$capital.gain)
 boxplot(employee$capital.loss)
 employee <- subset(employee, select = c(-capital.loss, -capital.gain))
+or_employee <- employee
 
+# Normalizando los datos
+pre_proc_val <- preProcess(employee[, cols], method = c("center", "scale"))
+employee[, cols] <- predict(pre_proc_val, employee[, cols])
 
-# Utilizando una semilla fija para obtener resultados deterministas
 set.seed(1)
-# Metodo para encontrar la cantidad optima de clusters, no obstante
-# para nuestro set de datos la ram de la computadora resulta
-# insuficiente.
-a <- validation_kproto(method = "mcclain", data = employee, k = 2:5)
 
-# Intuimos que tener dos clusters es buena pues muestra grupos
-# bien definidos
+# Probamos con el metodo del codo, para buscar el cluster optimo
+resultss <- c()
+max <- 25
+for (i in 1:max) {
+    print(paste("Trying with", i, "clusters"))
+    fit <- kproto(employee, i, verbose = F, nstart = 5, keep.data = F)
+    resultss <- append(resultss, fit$tot.withinss)
+}
+# El grafico aplicar el metodo del codo no queda muy claro cual es el mejor
+# Intuimos que debe estar entre 4 y 9
+plot(1:25, resultss[(35 - 25):34], type = "b", xlab = "# Clusters")
 
+
+# clustMixType permite utilizar metodos para detectar el numero ideal
+# de clusters, no obstante la ram de nuestras PCs resulta insuficiente
+# para terminar el calclulo
+r <- validation_kproto(method = "mcclain", data = employee)
+
+k <- 9
 # Aplicando kproto
-k <- 4
-fit <- kproto(employee, k, verbose = T)
+fit <- kproto(employee, k, verbose = F, nstart = 5)
+fit$tot.withinss
+summary(fit, data = employee)
+
+# Utilizar el resultado de kproto del reporte
+load(file = "report_data/rfit.rda")
 
 cluster_colors <- c()
-colors <- c("#ffcc66", "#ff99ff", "#99ff99", "#66ccff", "#996666", "#6666ff")
-for (i in 1:length(fit$cluster)) {
+colors <- c(
+    "blue",
+    "#ffcc66",
+    "#ff99ff",
+    "red",
+    "#66ccff",
+    "#99ff99",
+    "orange",
+    "#996666",
+    "green"
+)
+n <- length(fit$cluster)
+for (i in 1:n) {
     cluster_colors <- append(cluster_colors, colors[fit$cluster[i]])
 }
 
 plot(employee, col = cluster_colors)
-clprofiles(fit, employee, col = colors[1:k])
+clprofiles(fit, or_employee, col = colors[1:k])
+
+# Descomentar para salvar fit
+# save(fit, file = "report_data/fit.rda") #nolint
