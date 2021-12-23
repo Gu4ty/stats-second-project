@@ -49,7 +49,7 @@ Estudiantes David Guaty, Rodrigo Pino y Adrian Portales}
     \begin{enumerate}
         \item Escoja las variables a las cuales les aplicara cada técnica y explique por qué.
         \item En las técnicas que lo requieran realice el análisis de los supuestos y explique si es válida la
-        aplicación de la técnica en esa variable..
+        aplicación de la técnica en esa variable.
     \end{enumerate}
 
 \end{eje}
@@ -78,7 +78,157 @@ TODO
 
 \section*{ANOVA}
 
-TODO
+\textit{(c\'odigo referente al an\'alisis anova en anova.R)}
+
+En esta secci\'on se buscar\'an diferencias significativas entre grupos de una variable. 
+
+Por ejemplo, nos podr\'iamos preguntar cual \textit{workclass} tiene mayor \textit{income}, o cual de las \textit{ocuppation} tienen un mayor promedio de edad. Estos an\'alisis nos sirvir\'ian para diferenciar caracter\'isticas entre grupos de personas.
+
+Una de las variables m\'as importantes a analizar es el \textit{income}, ya que es la variable que se quiere predecir dados los dem\'as datos. Pero tenemos que la variable \textit{income} es categ\'orica(con categor\'ias $\le 50K$ y $ >50K$). Por lo que convertimos la variable \textit{income} a una variable num\'erica donde se le asigna el valor 1 a la categor\'ia  $\le 50K$ y el valor 2 a la categor\'ia $ >50K$. Con esta asignaci\'on es posible realizar un anova en el cual la variable dependiente sea el \textit{income}. Esto tiene sentido porque no nos interesa el significado exacto de la media de la variable num\'erica \textit{income}, sino la diferencias significativas entre las medias de los distintos grupos analizados. As\'i por ejemplo podemos analizar cual \textit{workclass} posee un mayor \textit{income}.
+
+Para la realizaci\'on de los an\'alisis anova tomando como variable dependiente el \textit{income} se escogieron las variables: \textit{education}, \textit{ocupation}. En su mayor parte, un mayor nivel de \textit{education} se correlaciona con un mayor porcentaje de individuos con $>50k$ de \textit{income}. El salario de una persona depende fuertemente de su profesi\'on, existen profesiones que tienen un mayor porcentaje de individuos con $>50K$ de \textit{income}. La variable \textit{sex} es otro buen predictor del \textit{income}, pero la variable \textit{sex} al tener solo dos categor\'ias ser\'ia mejor realizar un an\'alisis mediante t-student y no anova, ya que solo que comparar\'ian dos medias, parecido a como se hizo en la primera fase del proyecto. 
+
+Las variables escogidas son categ\'oricas y se puede analizar que categor\'ia presenta una diferencia significativa respecto al \textit{income}. 
+
+Para realizar los an\'alisis anova en R, se implement\'o una funci\'on auxiliar que puede imprimir dos cosas: de cumplirse los supuestos del modelo se imprime el \textit{summary} del resultado de la funci\'on \textit{aov}, en caso de no cumplirse los supuestos se imprime el mensaje "assumptions not fulfilled", dando a entender que el modelo no funciona.
+
+A continuaci\'on se explica por partes el c\'odigo de la funci\'on:
+\begin{lstlisting}[language=R,title= Funcion do\_anova Parte 1, breaklines=true]
+do_anova <- function(independent, dependent,name_of_independent, name_of_dependent){
+independent <- sample(independent, 1000)
+dependent <- sample(dependent, 1000)
+
+anova_data <- data.frame(independent, dependent)
+anova_data <- anova_data[order(anova_data$independent),]
+plot(dependent ~ independent, data = anova_data, ylab = name_of_dependent, xlab= name_of_independent)
+\end{lstlisting}
+
+En esta parte se leen dos vectores: independent y dependent. Se toma una muestra de 1000 elementos de ambos. Se conforma un data frame y adem\'as se ordena el data frame por la variable independendiente categ\'orica, as\'i el data frame queda estructurado como fue visto en conferencia para la correcta utilizaci\'on del anova. Adem\'as, se grafican las distintas categor\'ias en un gr\'afico de caja para analizar gr\'aficamente si existen diferencias. 
+
+\begin{lstlisting}[language=R,title= Funcion do\_anova Parte 2,  breaklines=true]
+result <- aov(dependent ~ independent, data = anova_data)
+res <- result$residuals
+\end{lstlisting}
+
+En esta parte se lleva a cabo el anova, se guardan en la variable \textit{res} los residuos para comprobar los supuestos.
+
+\begin{lstlisting}[language=R,title= Funcion do\_anova Parte 3,  breaklines=true]
+
+is_model_ok = TRUE
+stest <- shapiro.test(res)
+if(stest$p.value < 0.05){
+	is_model_ok = FALSE
+}
+
+btest <- bartlett.test(res, anova_data$independent)
+if(btest$p.value < 0.05){
+	is_model_ok = FALSE
+}
+dtest <- dwtest(result)
+if(dtest$p.value < 0.05){
+	is_model_ok = FALSE
+}
+if(is_model_ok){
+	summary(result)
+}
+else{
+	print("assumptions not fulfilled")
+}
+\end{lstlisting}
+En esta parte se hacen todas las pruebas para los supuestos. Si alguna prueba falla entonces no se cumplen los supuestos del modelo y se imprime el mensaje "assumptions not fulfilled". En caso de cumplirse los supuestos se imprime un resumen del anova.
+
+\textbf{Income $\sim$ education}
+\begin{lstlisting}[language=R, breaklines=true]
+> do_anova(data$education, data$income, "education", "income")
+[1] "residuals do not have a normal distribution"
+[1] "residuals are not homogeneous"
+[1] "assumptions not fulfilled"
+\end{lstlisting}
+
+Por lo que el modelo no cumple los supuestos.
+
+\textbf{Income $\sim$ occupation}
+\begin{lstlisting}[language=R, breaklines=true]
+> do_anova(data$occupation, data$income, "occupation", "income")
+[1] "residuals do not have a normal distribution"
+[1] "assumptions not fulfilled"
+\end{lstlisting}
+
+Por lo que el modelo no cumple los supuestos.
+
+En las variables escogidas no se cumple el modelo. Veamos otras variables.
+
+\textbf{Income $\sim$ workclass}
+\begin{lstlisting}[language=R, breaklines=true]
+> do_anova(data$workclass, data$age, "workclass", "age")
+[1] "residuals do not have a normal distribution"
+[1] "assumptions not fulfilled"
+\end{lstlisting}
+
+Por lo que el modelo no cumple los supuestos.
+
+\textbf{Income $\sim$ marital.status}
+\begin{lstlisting}[language=R, breaklines=true]
+> do_anova(data$marital.status, data$income, "marital.status", "income")
+[1] "residuals do not have a normal distribution"
+[1] "assumptions not fulfilled"
+\end{lstlisting}
+
+Por lo que el modelo no cumple los supuestos.
+
+Por lo que no se puede aplicar Anova, al menos con la variable \textit{income}.
+
+Pasemos a analizar otros pares de variables como \textit{workclass} y \textit{age}, podr\'iamos ver cual es el grupo de trabajadores con  mayor o menor edad.
+
+\textbf{Age $\sim$ workclass}
+\begin{lstlisting}[language=R, breaklines=true]
+> do_anova(data$workclass, data$age, "workclass", "age")
+[1] "residuals do not have a normal distribution"
+[1] "assumptions not fulfilled"
+\end{lstlisting}
+
+Por lo que el modelo no cumple los supuestos.
+
+Tratemos otro modelo con age. Seleccionamos la variable \textit{occupation}. Puede ser interesante saber la ocupaci\'on que tiene m\'as empleados de una edad mayor.
+
+\textbf{Age $\sim$ occupation}
+\begin{lstlisting}[language=R, breaklines=true]
+> do_anova(data$occupation, data$age, "occupation", "age")
+[1] "residuals do not have a normal distribution"
+[1] "assumptions not fulfilled"
+
+\end{lstlisting}
+
+Por lo que el modelo no cumple los supuestos.
+
+Tratemos de analizar si existe alguna diferencia entre el promedio de la ganancia capital entre los individuos de diferentes ocupaciones.
+
+\textbf{capital-gain $\sim$ occupation}
+\begin{lstlisting}[language=R, breaklines=true]
+> do_anova(data$occupation, data$capital.gain, "occupation", "capital.gain")
+[1] "residuals do not have a normal distribution"
+[1] "residuals are not homogeneous"
+[1] "assumptions not fulfilled"
+\end{lstlisting}
+
+Por lo que el modelo no cumple los supuestos.
+
+Otro caso de inter\'es es saber si existe diferencia significativa entre el promedio de las horas de trabajo semanales entre los individuos de diferentes profesiones.
+ 
+\textbf{hours-per-week $\sim$ occupation}
+\begin{lstlisting}[language=R, breaklines=true]
+> do_anova(data$occupation, data$hours.per.week, "occupation", "capital.gain")
+[1] "residuals do not have a normal distribution"
+[1] "residuals are not homogeneous"
+[1] "assumptions not fulfilled"
+ \end{lstlisting}
+ 
+ Por lo que el modelo no cumple los supuestos.
+ 
+ Para no hacer m\'as extensa la secci\'on, se mencionar\'a que tambi\'en se comprob\'o el anova con otros pares de variables. Digase: native-countre$\sim$education.num, native-countre$\sim$hours-per-week, race$\sim$hours-per-week, entre otras. En todas ellas los modelos no cumpl\'ian los supuestos. 
+ 
+ Por lo que se puede afirmar con cierta seguridad que no se puede aplicar t\'ecnicas de anova a los datos. Al menos no se encontr\'o una forma de aplicarlas :-(. Los investigadores est\'an tristes.  
+
 \section*{Conclusiones}
 
 
