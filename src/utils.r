@@ -157,26 +157,31 @@ numerical_data <- function(data){
 		data
 }
 
+delete_bad_rows<- function(data){
+    new_data <-  subset( 
+            data,
+            age!=' ?'&
+            workclass!='?'&
+            fnlwgt!=' ?' &
+            education!=' ?' &
+            education.num!=' ?' &
+            marital.status!=' ?'&
+            occupation!=' ?'&
+            relationship!=' ?'&
+            race!=' ?'&
+            sex!=' ?'&
+            capital.gain!=' ?'&
+            capital.loss!=' ?'&
+            hours.per.week!=' ?'&
+            native.country!=' ?'&
+            income!=' ?'
+    )
+    new_data
+}
+
 process_raw_data <- function(data, remove=TRUE){
 	if(remove){
-	 non_missing_data <- subset( 
-			data,
-			age!=' ?'&
-			workclass!=' ?'&
-			fnlwgt!=' ?' &
-			education!=' ?' &
-			education.num!=' ?' &
-			marital.status!=' ?'&
-			occupation!=' ?'&
-			relationship!=' ?'&
-			race!=' ?'&
-			sex!=' ?'&
-			capital.gain!=' ?'&
-			capital.loss!=' ?'&
-			hours.per.week!=' ?'&
-			native.country!=' ?'&
-			income!=' ?'
-	)
+	    non_missing_data <- delete_bad_rows(data)
 		new_data <- numerical_data(non_missing_data)
 		new_data	
 	} else {
