@@ -85,5 +85,3 @@ for (i in 1:length(fit$cluster)) {
 
 plot(employee, col = cluster_colors)
 clprofiles(fit, employee, col = colors[1:k])
-
-
