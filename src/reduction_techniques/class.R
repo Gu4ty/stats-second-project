@@ -1,5 +1,4 @@
 library(plyr)
-# library(readr)
 library(dplyr)
 library(caret)
 library(rpart)
@@ -13,14 +12,6 @@ names <- c(2, 4, 6:10, 14, 15)
 employee[, names] <- lapply(employee[, names], factor)
 glimpse(employee)
 
-# Estableciendo una semilla para tener resultados deterministas
-set.seed(1)
-
-# Entrenamos con el 0.7 de la muestra y probamos con el 0.3
-# Con este arbol de clasificacion queremos predecir el income de una persona
-# El arbol resultante nos permite hacer una reduccion de variables a las que
-# utiliza dicho arbol pues son las que guardan relacion con la variable.
-train_row_number <- createDataPartition(employee$sex, p = 0.7, list = F)
 
 # Normalizando con z-score las variables no cualitativas
 cols <- c(
@@ -30,8 +21,19 @@ cols <- c(
 pre_proc_val <- preProcess(employee[, cols], method = c("center", "scale"))
 # Aplicando la normalizcion a al set de entrenamiento y prueba
 employee[, cols] <- predict(pre_proc_val, employee[, cols])
-
 summary(employee)
+
+# employee <- subset(employee, select = c(-capital.loss, -capital.gain))
+
+# Estableciendo una semilla para tener resultados deterministas
+set.seed(1)
+
+# Entrenamos con el 0.7 de la muestra y probamos con el 0.3
+# Con este arbol de clasificacion queremos predecir el income de una persona
+# El arbol resultante nos permite hacer una reduccion de variables a las que
+# utiliza dicho arbol pues son las que guardan relacion con la variable.
+train_row_number <- createDataPartition(employee$sex, p = 0.7, list = F)
+
 
 # Se entrena el algoritmo de clasificacion tratando de predecir
 # el income.
