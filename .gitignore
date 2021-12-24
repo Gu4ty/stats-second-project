@@ -281,3 +281,4 @@ TSWLatexianTemp*
 *.Rhistory
 *.pdf
 .Rproj.user
+packages
