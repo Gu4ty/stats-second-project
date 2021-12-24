@@ -1,8 +1,8 @@
-source("utils.r")
+source("src/utils.R")
 library('lmtest')
 
 # process raw data
-raw_data <- read.csv('raw_data/adult.data.csv')
+raw_data <- read.csv('src/raw_data/adult.data.csv')
 data <- as.data.frame(
 				unclass(delete_bad_rows(raw_data)),
 				stringsAsFactors = TRUE
@@ -39,3 +39,4 @@ dwtest(lmodel)
 # constant variance 
 bptest(lmodel)
 bartlett.test(lmodel$residuals, data$income)
+

@@ -43,7 +43,7 @@ clprofiles <- function(object, x, col = NULL) {
 
 
 # Cargando, eliminando filas con valores NA y estandarizando
-employee <- read.csv("../raw_data/adult.data.csv")
+employee <- read.csv("src/raw_data/adult.data.csv")
 for (i in 1:15) employee <- employee[employee[i] != " ?", ]
 names <- c(2, 4, 6:10, 14, 15)
 employee[, names] <- lapply(employee[, names], factor)
@@ -84,13 +84,14 @@ plot(1:25, resultss[(35 - 25):34], type = "b", xlab = "# Clusters")
 r <- validation_kproto(method = "mcclain", data = employee)
 
 k <- 9
+
 # Aplicando kproto
 fit <- kproto(employee, k, verbose = F, nstart = 5)
 fit$tot.withinss
 summary(fit, data = employee)
 
 # Utilizar el resultado de kproto del reporte
-load(file = "report_data/rfit.rda")
+load(file = "src/reduction_techniques/report_data/rfit.rda")
 
 cluster_colors <- c()
 colors <- c(

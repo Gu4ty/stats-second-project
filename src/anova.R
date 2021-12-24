@@ -1,8 +1,8 @@
-source("utils.r")
+source("src/utils.R")
 library(lmtest)
 
 col_classes = c("numeric", "factor", "numeric", "factor", "numeric", "factor", "factor", "factor", "factor", "factor", "numeric", "numeric", "numeric", "factor", "factor")
-raw_data <- read.csv("raw_data/adult.data.csv", header = TRUE, colClasses = col_classes )
+raw_data <- read.csv("src/raw_data/adult.data.csv", header = TRUE, colClasses = col_classes )
 data <- delete_bad_rows(raw_data)
 
 income <- seq(1, 2)

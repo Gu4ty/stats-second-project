@@ -4,7 +4,7 @@ library(caret)
 library(rpart)
 library(rpart.plot)
 
-employee <- read.csv("../raw_data/adult.data.csv")
+employee <- read.csv("src/raw_data/adult.data.csv")
 for (i in 1:15) employee <- employee[employee[i] != " ?", ]
 glimpse(employee)
 
@@ -31,15 +31,7 @@ set.seed(1)
 # Con este arbol de clasificacion queremos predecir el income de una persona
 # El arbol resultante nos permite hacer una reduccion de variables a las que
 # utiliza dicho arbol pues son las que guardan relacion con la variable.
-# employee <- subset(or_employee,
-# select = c(
-# age,
-# education,
-# education.num,
-# income, occupation,
-# hours.per.week
-# )
-# )
+
 train_row_number <- createDataPartition(employee$age, p = 0.7, list = F)
 
 
