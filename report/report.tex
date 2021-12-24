@@ -7,6 +7,8 @@
 \usepackage{listings}
 \usepackage[width=17.00cm]{geometry}
 \usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=magenta}
 \graphicspath{{./images/}}
 \newcommand{\argt}{\theta}
 
@@ -164,8 +166,8 @@ Se cuenta con un conjunto de datos compuesto mayoritariamente por variables cate
 
 En 1995 Ralambondrainy present\'o una soluci\'on donde se convierten las variables categ\'oricas en varias variables binarias. Esto no es factible para nuestro set de datos pues aumentar\'ia la dimension de 15 a 108 columnas!
 
-Otra soluci\'on es presentada por Huang en 1997 donde se propone una extensi\'on de kmeans para variables categ\'oricas, kmodes, que utiliza las modas y las frecuencias de los datos cualitativos.
-Este algoritmo aunque novedoso, es poco pr\'actico en la realidad pues las variables rara vez se muestran s\'olo como categ\'oricas. 
+Otra soluci\'on es presentada por \href{www.cs.ust.hk/~qyang/Teaching/537/Papers/huang98extensions.pdf}{Huang} en 1997 donde se propone una extensi\'on de kmeans para variables categ\'oricas, kmodes, que utiliza las modas y las frecuencias de los datos cualitativos.
+Este algoritmo es poco pr\'actico en la realidad pues las variables rara vez se muestran s\'olo como categ\'oricas. 
 Huang abord\'o este problema presentando kprototype que utiliza kmodes cuando trabaja con variables categ\'oricas y kmeans en otro caso. Cuandos son dos variables cuantitativas se utiliza la distancia euclididana y cuando es una mezca se utiliza la distancia de gowers.
 
 Nuestro set de datos se analizar\'a utilizando la implementaci\'on de kprototype en la biblioteca \textit{clustMixType}.
@@ -183,7 +185,7 @@ Para detectar el n\'umero de cl\'usters necesarios se utiliz\'o el m\'etodo del 
 \subsubsection*{An\'alisis de cl\'usters}
 Se decidi\'o realizar el an\'alisis con 9 cl\'usters, se muestran las caracter\'isticas principales de cada uno:
 
-El primer grupo se encuentra conformado por mujeres, de las cuales hay negras y blancas, con una edad superior a los 45 a\~nos que trabajan principalmente en el sector privado. El nivel de educaci\'on ronda sobre pre universitario o \textit{some-college}  La mayor\'ia de estas personas no se encuentran en ningun tipo de relaci\'on debido a separaciones o enviudamientos. Trabajan ofreciendo servicios no catalogados por los datos. Es el grupo poblacional (junto con el sexto) que menos horas al d\'ia trabaja y ganan menos de 50k.
+El primer grupo se encuentra conformado por mujeres, de las cuales hay negras y blancas, con una edad superior a los 45 a\~nos que trabajan principalmente en el sector privado. El nivel de educaci\'on ronda sobre pre universitario o \textit{some-college}  La mayor\'ia de estas personas no se encuentran en ning\'un tipo de relaci\'on debido a separaciones o enviudamientos. Trabajan ofreciendo servicios no catalogados por los datos. Es el grupo poblacional (junto con el sexto) que menos horas al d\'ia trabaja y ganan menos de 50k.
 
 El segundo grupo esta compuesto mayoritariamente por hombres blancos que trabajan en el sector privado y para el gobierno. Son un grupo de personas que por regla general tiene m\'as de un t\'itulo universitario (m\'asters y doctorados) o cursaron la escuela profesional. La mayor\'ia de sus integrantes se encuentran casados y realizan trabajos como profesionales especializados. Trabajan entre 40 y 50 horas semanales con un salario que supera los 50k.
 
