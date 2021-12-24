@@ -55,14 +55,13 @@ Estudiantes David Guaty, Rodrigo Pino y Adrian Portales}
 \end{eje}
 
 \section*{Objetivos}
-\begin{itemize}
-		
-\end{itemize}
+	\item Aplicar t\'enicas de regresión lineal para poder hacer predicciones
+	\item  
+	\item Aplicar t\'ecnicas de reducción de dimensión que permitan un an\'alis de igual varacidad pero con menor dimensioanlidad en los datos.
  
 \section*{Introducci\'on} 
 
-
-
+El dataset con el que trabajamos es un Censo de los Estados Unidos del a\~no 1994. El mismo cuenta con alrededor de 32000 \textit{records} y 15 variables.   
 
 \section*{T\'ecnicas de Regresi\'on}
 \textit{(c\'odigo referente al an\'alisis de regresión lineal en lm.R)}
@@ -94,7 +93,7 @@ es que muchas de las variables son categ\'oricas y para poder hacer la regresión
 por una transformaci\'on donde se convierten en variables binarias, en dependencia del nivel de cada categor\'ia. Lamentablemente 
 este modelo no tuvo buenos resultados como se muestra a continuaci\'on:
 
-\begin{lstlisting}[language=R,title= Funcion do\_anova Parte 1, breaklines=true]
+\begin{lstlisting}[language=R,breaklines=true]
 Residual standard error: 0.3451 on 30086 degrees of freedom
 Multiple R-squared:  0.3644,    Adjusted R-squared:  0.3629
 F-statistic:   230 on 75 and 30086 DF,  p-value: < 2.2e-16
@@ -116,7 +115,7 @@ prob\'o elimiando una variable y despues volviendola a a\~nadir para eliminar ot
 Siguiendo el criterio de la significaci\'on de cada variable se decidi\'o eliminar como primera variable \textit{native.country}.
 El modelo resultante obtuvo el siguiente resultado:
 
-\begin{lstlisting}[language=R,title= Funcion do\_anova Parte 1, breaklines=true]
+\begin{lstlisting}[language=R, breaklines=true]
 Residual standard error: 0.3452 on 30126 degrees of freedom
 Multiple R-squared:  0.3634,    Adjusted R-squared:  0.3626
 F-statistic: 491.3 on 35 and 30126 DF,  p-value: < 2.2e-16
@@ -129,7 +128,7 @@ mismo que el modelo inicial: no se cumpl\'ia la homocedasticidad.
 En este punto decidimos seguir con el proceso de eliminaci\'on de variables. La siguiente variable fue \textit{rece}. Los 
 resultados fueron los siguientes:
 
-\begin{lstlisting}[language=R,title= Funcion do\_anova Parte 1, breaklines=true]
+\begin{lstlisting}[language=R, breaklines=true]
 Residual standard error: 0.3453 on 30130 degrees of freedom
 Multiple R-squared:  0.363,     Adjusted R-squared:  0.3623
 F-statistic: 553.8 on 31 and 30130 DF,  p-value: < 2.2e-16
@@ -167,6 +166,7 @@ Las variables escogidas son categ\'oricas y se puede analizar que categor\'ia pr
 Para realizar los an\'alisis anova en R, se implement\'o una funci\'on auxiliar que puede imprimir dos cosas: de cumplirse los supuestos del modelo se imprime el \textit{summary} del resultado de la funci\'on \textit{aov}, en caso de no cumplirse los supuestos se imprime el mensaje "assumptions not fulfilled", dando a entender que el modelo no funciona.
 
 A continuaci\'on se explica por partes el c\'odigo de la funci\'on:
+
 \begin{lstlisting}[language=R,title= Funcion do\_anova Parte 1, breaklines=true]
 do_anova <- function(independent, dependent,name_of_independent, name_of_dependent){
 independent <- sample(independent, 1000)
