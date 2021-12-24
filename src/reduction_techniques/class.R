@@ -23,7 +23,6 @@ pre_proc_val <- preProcess(employee[, cols], method = c("center", "scale"))
 employee[, cols] <- predict(pre_proc_val, employee[, cols])
 summary(employee)
 
-# employee <- subset(employee, select = c(-capital.loss, -capital.gain))
 
 # Estableciendo una semilla para tener resultados deterministas
 set.seed(1)
@@ -32,7 +31,16 @@ set.seed(1)
 # Con este arbol de clasificacion queremos predecir el income de una persona
 # El arbol resultante nos permite hacer una reduccion de variables a las que
 # utiliza dicho arbol pues son las que guardan relacion con la variable.
-train_row_number <- createDataPartition(employee$sex, p = 0.7, list = F)
+# employee <- subset(or_employee,
+# select = c(
+# age,
+# education,
+# education.num,
+# income, occupation,
+# hours.per.week
+# )
+# )
+train_row_number <- createDataPartition(employee$age, p = 0.7, list = F)
 
 
 # Se entrena el algoritmo de clasificacion tratando de predecir
