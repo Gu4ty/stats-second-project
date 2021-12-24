@@ -57,9 +57,11 @@ Estudiantes David Guaty, Rodrigo Pino y Adrian Portales}
 \end{eje}
 
 \section*{Objetivos}
+\begin{itemize}
 	\item Aplicar las t\'ecnicas estudiadas en clases para hacer un an\'alisis de los datos sobre en Censo de Estados Unidos del a\~no 1994.
 	\item Ganar experiencia en el trabajo con el lenguaje R.
 \section*{Introducci\'on} 
+\end{itemize}
 
 El dataset con el que trabajamos es un Censo de los Estados Unidos del a\~no 1994. El mismo cuenta con alrededor de 32000 \textit{records} y 15 variables, las cuales van desde la edad y la raza hasta el nivel de educaci\'on y la ocupaci\'on. El objetivo principal
 de este trabajo es usar dichos datos para aplicar t\'ecnicas estudiadas en clases como ANOVA, regresión lineal y reducción de dimensión que nos permitan obtener resultados para caracterizar las variables pertenecientes al conjunto de datos y poder hacer predicciones tambi\'en. Todo esto con la ayuda del lenguaje de programaci\'on R.
@@ -180,7 +182,9 @@ Antes de continuar el an\'alisis se debe tener claro ciertas cosas sobre los dat
     \item \textit{own-child} es el t\'ermino legal para los ni\~nos/j\'ovenes que viven con sus familias.
 \end{itemize}
 
-Para detectar el n\'umero de cl\'usters necesarios se utiliz\'o el m\'etodo del codo, la figura no obstante no deja bien claro cual es el n\'umero de cl\'usters \'optimo, se intuye que debe ser un n\'umero entre 5 y 9. Vale mencionar que \textit{clustMixType} viene con m\'etodos implementados para calcular dicho n\'umero, no obstante la \textit{ram} de nuestras PCs result\'o insuficientes y no se pudieron utilizar.
+Para detectar el n\'umero de cl\'usters necesarios se utiliz\'o el m\'etodo del codo, la figura no obstante no deja bien claro cual es el n\'umero de cl\'usters \'optimo, se intuye que debe ser un n\'umero entre 5 y 9. Vale mencionar que \textit{clustMixType} viene con m\'etodos implementados para calcular dicho n\'umero, no obstante la \textit{ram} de nuestras PCs result\'o insuficientes y no se pudieron utilizar. 
+
+Ejecutando el c\'odigo correspondiente a esta secci\'on se pude obtener la imagen, o visualizar directamente en la carpeta "src/reduction\_techniques/images" el archivo "elbow.png". Tambi\'en se puede ver "kproto.png" para ver los cl\'usters en los datos.
 
 \subsubsection*{An\'alisis de cl\'usters}
 Se decidi\'o realizar el an\'alisis con 9 cl\'usters, se muestran las caracter\'isticas principales de cada uno:
