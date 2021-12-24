@@ -162,42 +162,42 @@ Para ejecutar el c\'odigo y observar las gr\'aficas de las cuales se dedujeron l
 
 Se cuenta con un conjunto de datos compuesto mayoritariamente por variables categ\'oricas donde k-means al ser un m\'etodo que utiliza la distancia euclidiana no le es posible trabajar con datos categ\'oricos.
 
-En 1995 Ralambondrainy present\'o una soluci\'on donde se convierten las variables categ\'oricas en varias variables binarias. Esto no es factible para nuestro set de datos pues aumentar\'ia la dimension de 15 a 107 columnas!
+En 1995 Ralambondrainy present\'o una soluci\'on donde se convierten las variables categ\'oricas en varias variables binarias. Esto no es factible para nuestro set de datos pues aumentar\'ia la dimension de 15 a 108 columnas!
 
 Otra soluci\'on es presentada por Huang en 1997 donde se propone una extensi\'on de kmeans para variables categ\'oricas, kmodes, que utiliza las modas y las frecuencias de los datos cualitativos.
 Este algoritmo aunque novedoso, es poco pr\'actico en la realidad pues las variables rara vez se muestran s\'olo como categ\'oricas. 
 Huang abord\'o este problema presentando kprototype que utiliza kmodes cuando trabaja con variables categ\'oricas y kmeans en otro caso. Cuandos son dos variables cuantitativas se utiliza la distancia euclididana y cuando es una mezca se utiliza la distancia de gowers.
 
-Nuestro set de dato se analizar\'a utilizando la implementaci\'on de kprototype en la biblioteca \textit{clustMixType}.
+Nuestro set de datos se analizar\'a utilizando la implementaci\'on de kprototype en la biblioteca \textit{clustMixType}.
 
 Antes de continuar el an\'alisis se debe tener claro ciertas cosas sobre los datos:
 \begin{itemize}
     \item \textit{bachelor} en E.E.U.U es equivalente a licenciado.
-    \item \textit{highschool} significa haber terminado el preuniversitario o el bachillerato.
+    \item \textit{highschool} significa haber terminado el pre universitario o el bachillerato.
     \item \textit{some-college} es cuando se empieza la universidad, pero no se termina.
     \item \textit{own-child} es el t\'ermino legal para los ni\~nos/j\'ovenes que viven con sus familias.
 \end{itemize}
 
-Para detectar el n\'umero de cl\'usters necesarios se utiliz\'o el m\'etodo del codo, la figura no obstante no dejaba bien claro cual es el n\'umero de cl\'usters \'optimo, se intuy\'o que deb\'ia ser un n\'umero entre 5 y 9. Vale mencionar que \textit{clustMixType} ofrece mejores mecanismos para calcular dicho n\'umero, no obstane la \textit{ram} de nuestras PCs result\'o insuficientes y no se pudieron utilizar.
+Para detectar el n\'umero de cl\'usters necesarios se utiliz\'o el m\'etodo del codo, la figura no obstante no deja bien claro cual es el n\'umero de cl\'usters \'optimo, se intuye que debe ser un n\'umero entre 5 y 9. Vale mencionar que \textit{clustMixType} viene con m\'etodos implementados para calcular dicho n\'umero, no obstante la \textit{ram} de nuestras PCs result\'o insuficientes y no se pudieron utilizar.
 
 \subsubsection*{An\'alisis de cl\'usters}
 Se decidi\'o realizar el an\'alisis con 9 cl\'usters, se muestran las caracter\'isticas principales de cada uno:
 
-El primer grupo se encuentra conformado por mujeres, de las cuales hay negras y blancas, con una edad superior a los 45 a\~nos que trabajan principalmente en el sector privado. El nivel de educaci\'on ronda sobre preuniversitario o \textit{some-college}  La mayor\'ia de estas personas no se encuentran en ningun tipo de relaci\'on debido a separaciones o enviudamientos. Trabajan ofreciendo servicios no catalogados por los datos. Es el grupo poblacional (junto con el sexto) que menos horas al d\'ia trabaja y ganan menos de 50k.
+El primer grupo se encuentra conformado por mujeres, de las cuales hay negras y blancas, con una edad superior a los 45 a\~nos que trabajan principalmente en el sector privado. El nivel de educaci\'on ronda sobre pre universitario o \textit{some-college}  La mayor\'ia de estas personas no se encuentran en ningun tipo de relaci\'on debido a separaciones o enviudamientos. Trabajan ofreciendo servicios no catalogados por los datos. Es el grupo poblacional (junto con el sexto) que menos horas al d\'ia trabaja y ganan menos de 50k.
 
 El segundo grupo esta compuesto mayoritariamente por hombres blancos que trabajan en el sector privado y para el gobierno. Son un grupo de personas que por regla general tiene m\'as de un t\'itulo universitario (m\'asters y doctorados) o cursaron la escuela profesional. La mayor\'ia de sus integrantes se encuentran casados y realizan trabajos como profesionales especializados. Trabajan entre 40 y 50 horas semanales con un salario que supera los 50k.
 
 El tercer grupo esta integrado por hombres blancos casados entre los 30 y 40 a\~nos que trabajan en el sector privado y tienen t\'itulo de bachiller, algunos participaron en la universidad, pero no la terminaron. Trabajan de 40 a 50 horas semanales ofreciendo servicios de reparaci\'on y transporte, obteniendo un salario anual menor que 50k.
 
-El cuarto grupo esta compuesto por mujeres blancas entre los 30 y 40 a\~nos con nivel preuniversitario, \textit{some-collge} y licenciados. Se encuentran fuera de una relaci\'on debido al divorcio o nunca se han casado. Estas personas trabajan 40 horas semanales haciendo trabajos administrativos o clericales (ordenar emails, escribir documentos, responder el tel\'efono etc.) con un salario menor a 50k.
+El cuarto grupo esta compuesto por mujeres blancas entre los 30 y 40 a\~nos con nivel pre universitario, \textit{some-collge} y licenciados. Se encuentran fuera de una relaci\'on debido al divorcio o nunca se han casado. Estas personas trabajan 40 horas semanales haciendo trabajos administrativos o clericales (ordenar emails, escribir documentos, responder el tel\'efono etc.) con un salario menor a 50k.
 
-El quinto grupo consiste en hombres entre los 35 y 45 a\~nos de edad, de nacionalidad norteamericana y mexicana  en menor cantidad. Son las personas de menor nivel educativo de la muestra, el nivel m\'as alto obtenido es el preuniversitario. Trabajan ofreciendo servicios diversos o en ventas durante 40 horas a la semana cobrando anualmente menos de 50k.
+El quinto grupo consiste en hombres entre los 35 y 45 a\~nos de edad, una porci\'on importante es de nacionalidad mexicana. Son las personas de menor nivel educativo de la muestra, el nivel m\'as alto obtenido es el pre universitario. Trabajan ofreciendo servicios diversos o en ventas durante 40 horas a la semana cobrando anualmente menos de 50k.
 
 El sexto grupo esta constituido por los hombres y mujeres m\'as j\'ovenes de la muestra, entre los 20 y 25 a\~nos. El nivel de educaci\'on predominante es el bachillerato y \textit{some-college}. Muchos de ellos aun viven con su familia. Realizan todo tipo de trabajos en el sector privado lucrando anualmente menos de 50k. Su horario laboral est\'a entre los menores (de 20 a 40 horas semanales).
 
-El s\'eptimo grupo son mujeres y hombres tanto blancos y negros que terminaron el preuniversitario, pero no la universidad con una edad entre los 25 y 35 a\~nos. Trabajan en el sector privado distribuidos en todas las categor\'ias, con mayor incidencia en \textit{craft-repair} y \textit{transport-moving}. Su jornada laboral como promedio es de 40 a 45 horas semanales con un cobro anual menor que 50k.
+El s\'eptimo grupo son mujeres y hombres tanto blancos y negros que terminaron el pre universitario, pero no la universidad con una edad entre los 25 y 35 a\~nos. Trabajan en el sector privado distribuidos en todas las categor\'ias, con mayor incidencia en \textit{craft-repair} y \textit{transport-moving}. Su jornada laboral como promedio es de 40 a 45 horas semanales con un cobro anual menor que 50k.
 
-El ocatvo grupo esta compuesto por hombres blancos mayores de 45 a\~nos que se encuentran en una relaci\'on,  graduados del preuniversitario o que iniciado pero no finalizado la universidad. Trabajan mayoritiariamente en el sector privado ofreciendo servicios de  \textit{craft-repair}, \textit{sales} y \textit{transport-moving} de 40 a 45 horas semanales lucrando por ello un salario mayor a los 50k.
+El ocatvo grupo esta compuesto por hombres blancos mayores de 45 a\~nos que se encuentran en una relaci\'on,  graduados del pre universitario o que han iniciado pero no finalizado la universidad. Trabajan mayoritariamente en el sector privado ofreciendo servicios de  \textit{craft-repair}, \textit{sales} y \textit{transport-moving} de 40 a 45 horas semanales lucrando por ello un salario mayor a los 50k.
 
 El noveno y \'ultimo grupo esta representado por hombres blancos casados entre los 30 y 40 a\~nos de edad. Casi todos los integrantes de este grupo poseen un t\'itulo universitario, trabajan entre 40 y 50 horas semanales como managers ejecutivos con un salario anual superior a los 50k.
 
@@ -212,21 +212,22 @@ La diferencia m\'as notable entre el tercer y octavo grupo es la edad de los int
 El primer y octavo grupo se encuentran en un rango parecido en edad, sin embargo son muy diferentes en el resto de los aspectos: trabajan en cosas distintas, una cantidad de horas distintas y est\'an compuestos mayormente por sexos opuestos. Se intuye que lo que m\'as influye es la ocupaci\'on y las horas de trabajo.\\
 Se cree que el sexo tambi\'en influye de manera indirecta pu\'es este condiciona la ocupaci\'on de una persona. Por ejemplo, el cuarto grupo constituido mayormente por mujeres con un alto nivel de educaci\'on se centran en trabajos administrativos y clericales. No hay concentraci\'on grande de mujeres en trabajos manuales o ejecutivos.
 
-\item El segundo y noveno grupo presentan el m\'as alto nivel acad\'emico de la muestra. Tambi\'en tienen cargos ejecutivos o especializados, son mayores de 40 a\~nos y trabajan 40 horas o m\'as al d\'ia. Luego podemos decir que las variables que m\'as influyen sobre el salario es edad, ocupaci\'on, horas de trabajo y nivel de estudio.
+\item El segundo y noveno grupo presentan el m\'as alto nivel acad\'emico de la muestra. Tambi\'en tienen cargos ejecutivos o especializados, son mayores de 40 a\~nos y trabajan 40 horas o m\'as al d\'ia con un salario superior a los 50k. 
+Se puede decir entonces que las variables que m\'as influyen sobre el salario es edad, ocupaci\'on, horas de trabajo y nivel de estudio.
 
 \end{itemize}
 
 \subsection*{Clasificaci\'on}
-Se construir\'a un \'arbol de clasificaci\'on para predecir el \textit{income} de una persona. Se esera que el \'arbol busque las variables m\'as relevantes y se pueda reducir las dimensi\'on del conjunto de datos a las seleccionadas por el \'arbol.
+Se construir\'a un \'arbol de clasificaci\'on para predecir el \textit{income} de una persona. Se espera que el \'arbol busque las variables m\'as relevantes y se pueda reducir las dimensi\'on del conjunto de datos a las seleccionadas por el \'arbol.
 
-El \'arbol se puede obtener cuando se ejecuta el c\'odigo respectivo a esta secci\'on o en "src/reduction\_techniques/images/tree.png"
+El \'arbol se puede obtener cuando se ejecuta el c\'odigo respectivo a esta secci\'on o visualizar directamente en "src/reduction\_techniques/images/tree.png"
 
 \subsubsection*{An\'alisis del \'arbol}
-Cuando se visualiza el \'arbol obtenido las variables principales para el algoritmo son el tipo de \textit{relationship}, \textit{educacation} y \textit{capital.gain}. Esto difiere de lo analizado en \textbf{k-means (k-prototype)}.
+Cuando se observa el \'arbol obtenido las variables principales para el algoritmo son el tipo de \textit{relationship}, \textit{educacation} y \textit{capital.gain}. Esto difiere de lo analizado en \textbf{k-means (k-prototype)}.
 
-En el primer nivel pregunta el tipo de relaci\'on que presenta la persona. Eso ocurre pues los datos est\'an est\'an sesgados en este sentido. Por el an\'alisis de la secci\'on anterior se observa que las personas que cumplen la relaciones especificadas son por regla general j\'ovenes y mujeres, el sector poblacional que gana menos, en cambio, el conjunto de los hombres adultos que contienen dentro de s\'i a la mayor\'ia de las personas que ganas m\'as de 50k est\'an casi todos en una relaci\'on.
+En el primer nivel del \'arbol se pregunta el tipo de relaci\'on que presenta la persona. Eso ocurre pues los datos est\'an sesgados en este sentido. Por el an\'alisis de la secci\'on anterior se conoce que las personas que cumplen la relaciones especificadas son por regla general j\'ovenes y mujeres, el sector poblacional que gana menos, en cambio, el conjunto de los hombres adultos que contienen dentro de s\'i a la mayor\'ia de las personas que ganas m\'as de 50k est\'an casi todos en una relaci\'on.
 
-En el segundo nivel pregunta por el nivel de educaci\'on. Si es bajo (no es licenciado, ni m\'aster ni doctor, ni fue a la escuela profesional) entonces debe ganar mas de 50k. Esta nivel  coincide  con nuestro an\'alisis en la secci\'on anterior.
+En el segundo nivel pregunta por el nivel de educaci\'on. Si es bajo (no es licenciado, ni m\'aster ni doctor, ni fue a la escuela profesional) entonces debe ganar mas de 50k. Esto coincide  con nuestro an\'alisis en la secci\'on anterior.
 
 En el tercer y \'ultimo  nivel separa por el \textit{capital.gain}. Esta variable no se considera buena pues los valores est\'an muy centrados en cero, con algunos puntos aberrantes.
 
@@ -237,9 +238,10 @@ Si calculamos tambi\'en el specifity (un recall para los \textit{True Negatives}
 \subsection*{Componentes Principales}
 Para intentar realizar un an\'alisis de componentes principales fue necesario convertir las variables categ\'oricas a variables binarias. Como consecuencia de esto aumento la dimensi\'on del set de datos de 15 a 108 variables.
 Estas 108 variables es posible reducirlas a una menor cantidad agrup\'andolas en subgrupos semejantes. Por ejemplo \textit{native.country} que se transforma 41 variables binarias se pueda agrupar en continentes. Con las dem\'as variables categ\'oricas se puede realizar algo similar.
-Redujendo la cantidad de categor\'ias de cada variable se puede reducir la dimensi\'on pero no lo suficientemente bajo para luego de aplicar PCA obtener unos grupos representativos de la pobalci\'on.
 
-La utilizaci\'on de esta t\'ecnica conllevar\'ia un incremento en la dimensi\'on de la muestra.
+Reduciendo la cantidad de categor\'ias de cada variable se puede reducir la dimensi\'on pero no lo suficiente para luego aplicar PCA y extraer grupos representativos de la muestra.
+
+La utilizaci\'on de esta t\'ecnica conlleva a un incremento en la dimensi\'on de la muestra.
 
 
 \section*{ANOVA}
