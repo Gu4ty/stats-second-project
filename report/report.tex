@@ -236,8 +236,10 @@ Cuando calculamos las m\'etricas para predecir la eficacia del algoritmo se obti
 Si calculamos tambi\'en el specifity (un recall para los \textit{True Negatives}) o observamos la matriz de confusi\'on se evidencia que el CART falla en predecir correctamente a las personas que ganan m\'as de 50k la mitad de las veces. Los \textit{True Negatives} y \textit{False Negatives} tienen aproximadamente la misma cantidad. No obstante como estamos frente a una muestra donde predominan las personas que ganan menos de 50k y estos se predicen en su mayor\'ia correctamente se oculta el hecho de que predecir cuando ganan m\'as sea equivalente a tirar una moneda.
 
 \subsection*{Componentes Principales}
-Para intentar realizar un an\'alisis de componentes principales fue necesario convertir las variables categ\'oricas a variables binarias. Como consecuencia de esto aumento la dimensi\'on del set de datos de 15 a 108 variables.
-Estas 108 variables es posible reducirlas a una menor cantidad agrup\'andolas en subgrupos semejantes. Por ejemplo \textit{native.country} que se transforma 41 variables binarias se pueda agrupar en continentes. Con las dem\'as variables categ\'oricas se puede realizar algo similar.
+Para intentar realizar un an\'alisis de componentes principales fue necesario convertir las variables categ\'oricas a variables binarias. 
+Las variables categ\'oricas no se puede llevar directamente a n\'umeros de la forma que cada uno representa una categor\'ia pues el resultado de realizar PCA no tuviera sentido. Por ejemplo, si una componente resulta con \textit{marital.status} = 0.8 no es posible interpretarlo.
+
+Dividiendo las variables categ\'oricas en binarias, aumentan el n\'umero hasta 108. Es posible reducirlas a una menor cantidad agrup\'andolas en subgrupos semejantes. Por ejemplo \textit{native.country} que se transforma 41 variables binarias se pueda agrupar en continentes. Con las dem\'as variables categ\'oricas se puede realizar algo similar.
 
 Reduciendo la cantidad de categor\'ias de cada variable se puede reducir la dimensi\'on pero no lo suficiente para luego aplicar PCA y extraer grupos representativos de la muestra.
 
@@ -250,11 +252,11 @@ La utilizaci\'on de esta t\'ecnica conlleva a un incremento en la dimensi\'on de
 
 En esta secci\'on se buscar\'an diferencias significativas entre grupos de una variable. 
 
-Por ejemplo, nos podr\'iamos preguntar cual \textit{workclass} tiene mayor \textit{income}, o cual de las \textit{ocuppation} tienen un mayor promedio de edad. Estos an\'alisis nos sirvir\'ian para diferenciar caracter\'isticas entre grupos de personas.
+Por ejemplo, nos podr\'iamos preguntar cual \textit{workclass} tiene mayor \textit{income}, o cual de las \textit{occupation} tienen un mayor promedio de edad. Estos an\'alisis nos sirvir\'ian para diferenciar caracter\'isticas entre grupos de personas.
 
 Una de las variables m\'as importantes a analizar es el \textit{income}, ya que es la variable que se quiere predecir dados los dem\'as datos. Pero tenemos que la variable \textit{income} es categ\'orica(con categor\'ias $\le 50K$ y $ >50K$). Por lo que convertimos la variable \textit{income} a una variable num\'erica donde se le asigna el valor 1 a la categor\'ia  $\le 50K$ y el valor 2 a la categor\'ia $ >50K$. Con esta asignaci\'on es posible realizar un anova en el cual la variable dependiente sea el \textit{income}. Esto tiene sentido porque no nos interesa el significado exacto de la media de la variable num\'erica \textit{income}, sino la diferencias significativas entre las medias de los distintos grupos analizados. As\'i por ejemplo podemos analizar cual \textit{workclass} posee un mayor \textit{income}.
 
-Para la realizaci\'on de los an\'alisis anova tomando como variable dependiente el \textit{income} se escogieron las variables: \textit{education}, \textit{ocupation}. En su mayor parte, un mayor nivel de \textit{education} se correlaciona con un mayor porcentaje de individuos con $>50k$ de \textit{income}. El salario de una persona depende fuertemente de su profesi\'on, existen profesiones que tienen un mayor porcentaje de individuos con $>50K$ de \textit{income}. La variable \textit{sex} es otro buen predictor del \textit{income}, pero la variable \textit{sex} al tener solo dos categor\'ias ser\'ia mejor realizar un an\'alisis mediante t-student y no anova, ya que solo que comparar\'ian dos medias, parecido a como se hizo en la primera fase del proyecto. 
+Para la realizaci\'on de los an\'alisis anova tomando como variable dependiente el \textit{income} se escogieron las variables: \textit{education}, \textit{occupation}. En su mayor parte, un mayor nivel de \textit{education} se correlaciona con un mayor porcentaje de individuos con $>50k$ de \textit{income}. El salario de una persona depende fuertemente de su profesi\'on, existen profesiones que tienen un mayor porcentaje de individuos con $>50K$ de \textit{income}. La variable \textit{sex} es otro buen predictor del \textit{income}, pero la variable \textit{sex} al tener solo dos categor\'ias ser\'ia mejor realizar un an\'alisis mediante t-student y no anova, ya que solo que comparar\'ian dos medias, parecido a como se hizo en la primera fase del proyecto. 
 
 Las variables escogidas son categ\'oricas y se puede analizar que categor\'ia presenta una diferencia significativa respecto al \textit{income}. 
 
@@ -400,14 +402,13 @@ Otro caso de inter\'es es saber si existe diferencia significativa entre el prom
 
 \section*{Conclusiones}
 
-
-TODO
+EL an\'alisis de los datos muestran que estamos frente a datos con muy poca correlaci\'on y sesgados. Las t\'ecnicas de car\'acter l\'ineal surten poco afecto, adem\'as de que impide que se cumplan supuestos. Regresi\'on l\'ineal y ANOVA no fueron efectivas. Tambi\'en las t\'ecnicas estudiadas en clases se enfoca principalmente en valores cualitativos y nuestro set es en su mayori\'ia cualitativo, eso requiri\'o un aumento de dimensi\'on en los datos y por ende complicaciones adicionales. 
 
 \section*{Contribuciones de cada integrante}
 
  Para la realizaci\'on del proyecto se sigui\'o la siguiente estrategia:
 
- Cada integrante escogi\'on un tipo de t\'ecina para aplicar ( reducción de dimensión, regresión lineal o ANOVA ). Luego
+ Cada integrante escogi\'o un tipo de t\'ecina para aplicar ( reducción de dimensión, regresión lineal o ANOVA ). Luego
  de aplicar dicha t\'ecnica, el integrante le explica le procedimiento seguido y los resultados obtenidos al resto del equipo, y estos 
  tratan de encontrarle alg\'un fallo en el c\'odigo o en alguna explicaci\'on del informe que no est\'e muy clara.
  
