@@ -280,3 +280,4 @@ TSWLatexianTemp*
 *.RData
 *.Rhistory
 *.pdf
+.Rproj.user
